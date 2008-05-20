@@ -33,7 +33,7 @@ class Ebuild
   end
   
   def atom_of(dependency)
-    "dev-ruby/#{pn}"
+    "dev-ruby/#{dependency.name}"
   end
   
   def uri
