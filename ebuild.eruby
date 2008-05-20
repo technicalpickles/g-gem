@@ -6,7 +6,7 @@ inherit gems
 
 DESCRIPTION="<%= spec.summary %>"
 HOMEPAGE="<%= spec.homepage %>"
-SRC_URI="<%= source %>/gems/<%= spec.name %>-<%= spec.version.version %>.gem"
+SRC_URI="<%= uri %>"
 
 LICENSE="MIT"
 SLOT="0"
@@ -14,8 +14,10 @@ KEYWORDS="~amd64-linux ~ia64-linux ~x86-linux ~ppc-macos ~x86-macos ~sparc-solar
 IUSE=""
 RESTRICT="test"
 
+<%- unless spec.dependencies.empty? -%>
 DEPEND="
-  <% spec.dependencies.each do |dependency| %>
-  dev-ruby/<%= dependency.name %>
-  <% end %>
+  <%- spec.dependencies.each do |dependency| -%>
+  <%= atom_of(dependency) %>
+  <%- end -%>
 "
+<%- end -%>
