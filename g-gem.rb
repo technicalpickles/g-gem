@@ -9,22 +9,35 @@ require 'erubis'
 package = ARGV.first || 'activerecord'
 
 class Ebuild
-  attr_accessor :spec, :source
+  attr_accessor :spec, :source, :dependencies
   
   def initialize(spec_pair)
-    @spec, @source = spec_pair 
+    @spec, @source = spec_pair
+    @dependencies = []
   end
   
   def filename
-    "#{spec.name.downcase}-#{spec.version.version}.ebuild"
+    "#{p}.ebuild"
+  end
+  
+  def p
+    "#{pn}-#{pv}"
+  end
+  
+  def pn
+    spec.name.downcase
+  end
+  
+  def pv
+    spec.version.version
   end
   
   def atom_of(dependency)
-    "dev-ruby/#{dependency.name}"
+    "dev-ruby/#{pn}"
   end
   
   def uri
-    "#{source}/gems/#{spec.name}-#{spec.version.version}.gem"
+    "#{source}/gems/#{p}.gem"
   end
   
   def write
